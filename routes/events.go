@@ -49,7 +49,6 @@ func CreateEvent(context *gin.Context) {
 }
 
 func updateEvent(context *gin.Context) {
-
 	id, err := strconv.ParseInt(context.Param("id"), 10, 64)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "Could not parse event id", "Error": err})
@@ -76,7 +75,7 @@ func updateEvent(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not update event", "Error": err})
 		return
 	}
-	context.JSON(http.StatusOK, updateEvent)
+	context.JSON(http.StatusOK, gin.H{"message": "Event Updated Successfully"})
 }
 
 func deletEvent(context *gin.Context) {

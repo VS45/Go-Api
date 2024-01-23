@@ -86,3 +86,21 @@ func (e Event) DeleteEvent() error {
 
 	return err
 }
+
+func (e *Event) RegisterEvent(userId int64) error {
+	query := `INSERT INTO registrations(event_id,user_id)
+	VALUES(?,?)
+	`
+	stmt, err := db.DB.Prepare(query)
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+	result, err := stmt.Exec(e.ID, userId)
+	if err != nil {
+		return err
+	}
+	id, err := result.LastInsertId()
+	e.ID = id
+	return err
+}
